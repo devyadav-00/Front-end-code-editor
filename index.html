@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front End Code Editor</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+        body{
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(238, 226, 229);
+            display: flex;
+        }
+        .leftPart{
+            height: 100%;
+            background-color: lightgray;
+            flex-basis: 50%;
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .rightPart{
+            flex-basis: 50%;
+        }
+        .content{
+            flex-basis: 33%;
+            background-color: gray;
+        }
+        .leftPart .content label{
+            display: block;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 1px 0;
+
+        }
+        .leftPart .content textarea{
+            width: 99.8%;
+            height: 91%;
+            background-color: grey;
+            color: beige;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+        .rightPart label{
+            display: flex;
+            background-color: rgb(29, 1, 1);
+            color: white;
+            justify-content: center;
+            padding: 1px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="leftPart">
+        <div class="content">
+            <label>HTML</label>
+            <textarea></textarea>
+        </div>
+        <div class="content">
+            <label>CSS</label>
+            <textarea></textarea>
+        </div>
+        <div class="content">
+            <label>JS</label>
+            <textarea></textarea>
+        </div>
+    </div>
+    <div class="rightPart">
+        <label>OUTPUT</label>
+        <iframe width="99.5%" height="95.7%" id="output"></iframe>
+    </div>
+</body>
+<script>
+    let output = document.querySelector("#output");
+    let htmlCode, cssCode, jsCode ='';
+    let allInput = document.querySelectorAll(".leftPart textarea");//will give nodelist
+    allInput.forEach((element, index ) => {
+        element.addEventListener("keyup",()=>{
+            if(index==0){
+                htmlCode=element.value;
+            }
+            if(index==1){
+                cssCode=element.value;
+            }
+            if(index==2){
+                jsCode=element.value;
+            }
+             output.contentDocument.body.innerHTML = htmlCode;
+             output.contentDocument.head.innerHTML =`<style>${cssCode}</style>`;
+             output.contentWindow.eval(jsCode);
+        })
+    });
+    
+</script>
+</html>
